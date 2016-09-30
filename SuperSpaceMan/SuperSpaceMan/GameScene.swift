@@ -168,20 +168,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             playerNode!.physicsBody!.isDynamic = true
             
             coreMotionManager.accelerometerUpdateInterval = 0.3
-            coreMotionManager.startAccelerometerUpdates(to: OperationQueue(),
-                withHandler: {
-                    
-                    (accelerometerData : CMAccelerometerData?, error: Error?) -> Void in
-                    
-                    if (error) != nil {
-                        
-                        print("There was an error")
-                    }
-                    else {
-                        
-                        self.xAxisAcceleration = CGFloat(accelerometerData!.acceleration.x)
-                    }
-            })
+            if coreMotionManager.isAccelerometerAvailable {
+                coreMotionManager.startAccelerometerUpdates(to: OperationQueue(),
+                                                            withHandler: {
+                                                                
+                                                                (accelerometerData : CMAccelerometerData?, error: Error?) -> Void in
+                                                                
+                                                                if (error) != nil {
+                                                                    
+                                                                    print("There was an error")
+                                                                }
+                                                                else {
+                                                                    
+                                                                    self.xAxisAcceleration = CGFloat(accelerometerData!.acceleration.x)
+                                                                }
+                })
+
+            }
+            
         }
         
         if impulseCount > 0 {
