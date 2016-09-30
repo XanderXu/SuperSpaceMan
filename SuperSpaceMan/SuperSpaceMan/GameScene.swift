@@ -171,7 +171,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             coreMotionManager.startAccelerometerUpdates(to: OperationQueue(),
                 withHandler: {
                     
-                    (data: CMAccelerometerData!, error: NSError!) in
+                    (accelerometerData : CMAccelerometerData?, error: Error?) -> Void in
                     
                     if (error) != nil {
                         
@@ -179,9 +179,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                     else {
                         
-                        self.xAxisAcceleration = CGFloat(data!.acceleration.x)
+                        self.xAxisAcceleration = CGFloat(accelerometerData!.acceleration.x)
                     }
-            } as! CMAccelerometerHandler)
+            })
         }
         
         if impulseCount > 0 {
